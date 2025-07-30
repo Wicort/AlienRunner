@@ -10,6 +10,7 @@ public class RoadGenerator : MonoBehaviour
     public GameObject RoadPrefab;
     public float maxSpeed = 10;
     public int maxRoadCount = 5;
+    public GameObject menuUI;
 
     private List<GameObject> roads = new();
     private float speed;
@@ -48,12 +49,14 @@ public class RoadGenerator : MonoBehaviour
     public void StartLevel()
     {
         speed = maxSpeed;
+        menuUI.SetActive(false);
         SwipeManager.Instance.enabled = true;
     }
 
     public void ResetLevel()
     {
         speed = 0;
+        menuUI.SetActive(true);
 
         while (roads.Count > 0)
         {
