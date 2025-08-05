@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets._Project._scripts._core.EventBus
+namespace Assets._Project._scripts._core.Events
 {
     public class EventUnsubscriber<T> : IDisposable where T : struct
     {

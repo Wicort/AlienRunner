@@ -47,12 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93647dfe90b0ac443a345e09d47052fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationDuration: 2
-  rotationAxis: {x: 0, y: 1, z: 0}
-  loops: -1
-  bobHeight: 0.5
-  bobSpeed: 0.5
-  initialPosition: {x: 0, y: 0, z: 0}
+  RotationDuration: 2
+  RotationAxis: {x: 0, y: 1, z: 0}
+  BobHeight: 0.5
+  BobSpeed: 0.5
 --- !u!114 &7954074922733102273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,8 +83,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.41167796, y: 0.41418225, z: 1}
-  m_Center: {x: 0, y: 0.21532753, z: 0}
+  m_Size: {x: 0.48458254, y: 0.52730393, z: 1.0694443}
+  m_Center: {x: 0, y: 0.2338816, z: 0}
 --- !u!1001 &6931440623495751534
 PrefabInstance:
   m_ObjectHideFlags: 0

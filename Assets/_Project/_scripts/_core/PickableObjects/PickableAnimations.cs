@@ -3,27 +3,32 @@ using UnityEngine;
 
 public class PickableAnimations : MonoBehaviour
 {
-    public float rotationDuration = 2f;
-    public Vector3 rotationAxis = Vector3.up;
-    public int loops = -1;
+    [Header("Вращение")]
+    public float RotationDuration = 2f;
+    public Vector3 RotationAxis = Vector3.up;
 
-    public float bobHeight = .5f;
-    public float bobSpeed = .5f;
-    public Vector3 initialPosition;
+    [Header("Колебание вверх-вниз")]
+    public float BobHeight = .5f;
+    public float BobSpeed = .5f;
+    
+    private Vector3 _initialPosition;
+    private int _loops = -1;
 
     private void Start()
     {
-        initialPosition = transform.position;
-        transform.DORotate(rotationAxis * 360, rotationDuration, RotateMode.FastBeyond360)
+        _initialPosition = transform.position;
+        transform.DORotate(RotationAxis * 360, RotationDuration, RotateMode.FastBeyond360)
             .SetRelative(true)
-            .SetLoops(loops)
-            .SetEase(Ease.Linear);
+            .SetLoops(_loops)
+            .SetEase(Ease.Linear)
+            .SetId(transform);
 
-        
-        transform.DOMoveY(initialPosition.y + bobHeight, 1f / (bobSpeed * 2)) // Полупериод
-                 .SetLoops(-1, LoopType.Yoyo)
+        float moveDuration = 1f / (BobSpeed * 2f);
+        transform.DOMoveY(_initialPosition.y + BobHeight, moveDuration)
+                 .SetLoops(_loops, LoopType.Yoyo)
                  .SetEase(Ease.InOutSine)
-                 .SetRelative(false);
+                 .SetRelative(false)
+                 .SetId(transform);
     }
 
     private void OnDisable()

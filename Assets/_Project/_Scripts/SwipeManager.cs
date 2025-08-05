@@ -69,12 +69,10 @@ public class SwipeManager : MonoBehaviour
     {
         if (swipe[0] || swipe[1] || swipe[2] || swipe[3])
         {
-            Debug.Log($"{swipe[0]} | {swipe[1]} | {swipe[2]} | {swipe[3]}");
             MoveEvent?.Invoke(swipe);
         }
         else
         {
-            Debug.Log("Clck");
             ClickEvent?.Invoke(TouchPosition());
         }
 

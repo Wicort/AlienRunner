@@ -1,30 +1,17 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets._Project._scripts._core.EventBus
+namespace Assets._Project._scripts._core.Events
 {
-    public class EventBus: MonoBehaviour
+    public class EventBus : Singleton<EventBus>
     {
-        private Dictionary<Type, Delegate> eventListeners = new Dictionary<Type, Delegate>();
+        private Dictionary<Type, Delegate?> eventListeners = new Dictionary<Type, Delegate?>();
 
-        public static EventBus Instance { get; private set; }
-
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-
-        public IDisposable Subscribe<T>(Action<T> listener) where T: struct
+        public IDisposable? Subscribe<T>(Action<T> listener) where T : struct
         {
             Type eventType = typeof(T);
 
@@ -33,8 +20,8 @@ namespace Assets._Project._scripts._core.EventBus
                 eventListeners[eventType] = null;
             }
 
-            Action<T> existingDelegate = eventListeners[eventType] as Action<T>;
-            
+            Action<T>? existingDelegate = eventListeners[eventType] as Action<T>;
+
             if (existingDelegate != null && existingDelegate.GetInvocationList().Contains(listener))
             {
                 Debug.Log($"[EventBus] Попытка двойной подписки на {typeof(T)}. Подписчик проигнорирован");
@@ -46,14 +33,14 @@ namespace Assets._Project._scripts._core.EventBus
             return new EventUnsubscriber<T>(this, listener);
         }
 
-        public void Unsubscribe<T>(Action<T> listener) where T : struct 
+        public void Unsubscribe<T>(Action<T> listener) where T : struct
         {
             Type eventType = typeof(T);
-            
-            if (eventListeners.TryGetValue(eventType, out Delegate? existing))
+
+            if (eventListeners.TryGetValue(eventType, out Delegate? existing) && existing != null)
             {
                 Action<T> existingAction = (Action<T>)existing;
-                Action<T> newAction = existingAction - listener;
+                Action<T>? newAction = existingAction - listener;
 
                 if (newAction == null)
                 {
@@ -70,11 +57,11 @@ namespace Assets._Project._scripts._core.EventBus
         {
             Type eventType = typeof(T);
 
-            if (eventListeners.TryGetValue(eventType, out Delegate? delegates))
+            if (eventListeners.TryGetValue(eventType, out Delegate? delegates) && delegates != null)
             {
                 Delegate[] invokationList = delegates.GetInvocationList();
 
-                foreach (var action in invokationList)
+                foreach (Delegate action in invokationList)
                 {
                     try
                     {

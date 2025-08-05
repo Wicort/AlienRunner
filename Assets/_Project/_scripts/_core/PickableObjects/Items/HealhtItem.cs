@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets._Project._scripts._core.Events;
+using UnityEngine;
 
 namespace Assets._Project._scripts._core.PickableObjects
 {
@@ -9,7 +10,10 @@ namespace Assets._Project._scripts._core.PickableObjects
 
         public void OnPickup()
         {
-            Debug.Log("Health Item picked");
+            EventBus.Instance?.Publish(new HealPickedEvent
+            {
+                amount = HealAmount
+            });
         }
     }
 }
