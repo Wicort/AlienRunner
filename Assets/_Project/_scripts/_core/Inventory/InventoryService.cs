@@ -9,7 +9,19 @@ namespace Assets._Project._scripts._core.Inventory
 {
     public class InventoryService
     {
+        private static InventoryService? _instance;
         private readonly Dictionary<Type, int> _itemCounts = new();
+
+        public static InventoryService Instance
+        {
+            get
+            {
+                _instance ??= new InventoryService();
+                return _instance;
+            }
+        }
+
+        private InventoryService() { }
 
         public IEnumerable<Type> GetAllTypes() => _itemCounts.Keys;
 

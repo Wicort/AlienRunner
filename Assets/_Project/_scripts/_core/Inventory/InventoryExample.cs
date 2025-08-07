@@ -7,9 +7,9 @@ namespace Assets._Project._scripts._core.Inventory
 {
     public class InventoryExample : MonoBehaviour
     {
-        public InventoryService Inventory { get; private set; } = new();
+        public InventoryService Inventory = InventoryService.Instance;
 
-        private void Awake()
+        private void Start()
         {
             SubscribeToEvents();
         }
