@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Assets._Project._scripts._core.Reactive;
+using System;
 using UnityEngine;
 
 namespace Assets._Project._scripts.Player
 {
     public class Health
     {
-        public event Action<float, float> Changed;
-
-        public float Max { get; private set; }
-        public float Current { get; private set; }
+        public ReactiveVariable<float> Max { get; }
+        public ReactiveVariable<float> Current { get; }
 
         public Health(float max, float current)
         {
-            Max = max;
-            Current = current;
+            Max = new ReactiveVariable<float>(max);
+            Current = new ReactiveVariable<float>(current);
         }
 
         public void Reduce(float value)
@@ -23,20 +22,16 @@ namespace Assets._Project._scripts.Player
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
-            float oldValue = Current;
-            Current = Mathf.Clamp(Current - value, 0, Max);
-
-            Changed?.Invoke(oldValue, Current);
+            float oldValue = Current._value;
+            Current._value = Mathf.Clamp(Current._value - value, 0, Max._value);
         }
 
         public void Add(float value)
         {
             if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
 
-            float oldValue = Current;
-            Current = Mathf.Clamp(Current + value, 0, Max);
-
-            Changed?.Invoke(oldValue, Current);
+            float oldValue = Current._value;
+            Current._value = Mathf.Clamp(Current._value + value, 0, Max._value);
         }
     }
 }
