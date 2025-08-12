@@ -1,7 +1,6 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets._Project._scripts._core.Reactive
 {
@@ -9,7 +8,7 @@ namespace Assets._Project._scripts._core.Reactive
     {
         public event Action<T, T> Changed;
 
-        public T _value { get; set; }
+        private T _value;
         private IEqualityComparer<T> _comparer;
 
         public ReactiveVariable() : this(default(T)) 
@@ -34,8 +33,8 @@ namespace Assets._Project._scripts._core.Reactive
             {
                 T oldValue = _value;
                 _value = value;
-
-                if (_comparer.Equals(oldValue, value))
+ 
+                if (_comparer.Equals(oldValue, value) == false)
                 {
                     Changed?.Invoke(oldValue, _value);
                 }

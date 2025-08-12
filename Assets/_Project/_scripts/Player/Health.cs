@@ -22,16 +22,16 @@ namespace Assets._Project._scripts.Player
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
-            float oldValue = Current._value;
-            Current._value = Mathf.Clamp(Current._value - value, 0, Max._value);
+            float oldValue = Current.Value;
+            Current.Value = Mathf.Clamp(Current.Value - value, 0, Max.Value);
         }
 
         public void Add(float value)
         {
             if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
 
-            float oldValue = Current._value;
-            Current._value = Mathf.Clamp(Current._value + value, 0, Max._value);
+            float oldValue = Current.Value;
+            Current.Value = Mathf.Clamp(Current.Value + value, 0, Max.Value);
         }
     }
 }

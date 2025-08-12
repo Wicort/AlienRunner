@@ -18,7 +18,7 @@ namespace Assets._Project._scripts.Player
 
             _current.Changed += OnHealthChanged;
 
-            UpdateValue(_current._value, _max._value);
+            UpdateValue(_current.Value, _max.Value);
         }
 
         private void OnDestroy()
@@ -26,7 +26,7 @@ namespace Assets._Project._scripts.Player
             _current.Changed -= OnHealthChanged;
         }
 
-        private void OnHealthChanged(float arg1, float newValue) => UpdateValue(newValue, _max._value);
+        private void OnHealthChanged(float arg1, float newValue) => UpdateValue(newValue, _max.Value);
 
         private void UpdateValue(float currentValue, float maxValue) => _slider.value = currentValue / maxValue;
     }

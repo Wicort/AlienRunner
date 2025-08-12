@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets._Project._scripts._core.Events;
+using System;
+using UnityEngine;
 
 namespace Assets._Project._scripts.Player
 {
@@ -14,13 +16,27 @@ namespace Assets._Project._scripts.Player
             _healthView.Initialize(_health.Current, _health.Max);
         }
 
+        private void OnEnable()
+        {
+            EventBus.Instance.Subscribe<HealPickedEvent>(OnHealthPicked);
+        }
+
+        private void OnHealthPicked(HealPickedEvent @event)
+        {
+            _health.Add(@event.amount);
+        }
+
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1)) 
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
                 _health.Reduce(10f);
+            }
             
             if (Input.GetKeyDown(KeyCode.Alpha2)) 
-                _health.Add(10f);
+            {
+                _health.Add(10f); 
+            }
         }
     }
 }
