@@ -14,7 +14,6 @@ namespace Assets._Project._scripts._core.PickableObjects
                 {
                     pickableItem.OnPickup();
                     gameObject.SetActive(false);
-                    //GameEvents.OnItemPicked?.Invoke(item);
                 }
             }
         }
