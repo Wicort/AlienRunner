@@ -9,6 +9,9 @@ namespace Assets._Project._scripts._core.PickableObjects
 
         public void OnPickup()
         {
+#if UNITY_EDITOR
+            Debug.Log("Документы получены");
+#endif
 
             EventBus.Instance?.Publish(new DataCollectedEvent
             {

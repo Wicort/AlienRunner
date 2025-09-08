@@ -10,6 +10,10 @@ namespace Assets._Project._scripts._core.PickableObjects
 
         public void OnPickup()
         {
+#if UNITY_EDITOR
+            Debug.Log("Медикаменты получены");
+#endif
+
             EventBus.Instance?.Publish(new HealPickedEvent
             {
                 amount = HealAmount

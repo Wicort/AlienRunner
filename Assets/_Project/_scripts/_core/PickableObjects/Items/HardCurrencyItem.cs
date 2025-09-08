@@ -10,6 +10,10 @@ namespace Assets._Project._scripts._core.PickableObjects
 
         public void OnPickup()
         {
+#if UNITY_EDITOR
+            Debug.Log("Хард валюта получена");
+#endif
+
             EventBus.Instance?.Publish(new HardCurrencyChangedEvent
             {
                 amount = amount

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: AlienChip
   m_EditorClassIdentifier: 
   DisplayName: Alien chip
-  Icon: {fileID: 0}
+  Icon: {fileID: 1022097119, guid: 89568c0dbe1ba7448aaae2650adec402, type: 3}
   Description: Soft currency
   amount: 1

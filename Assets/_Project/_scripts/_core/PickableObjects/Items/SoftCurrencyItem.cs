@@ -9,7 +9,11 @@ namespace Assets._Project._scripts._core.PickableObjects
         public int amount = 1;
 
         public void OnPickup()
-        {            
+        {
+#if UNITY_EDITOR
+            Debug.Log("Софт валюта получена");
+#endif
+
             EventBus.Instance?.Publish(new SoftCurrencyChangedEvent
             {
                 amount = amount

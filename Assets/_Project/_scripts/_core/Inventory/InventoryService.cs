@@ -4,6 +4,7 @@ using Assets._Project._scripts._core.Events;
 using Assets._Project._scripts._core.PickableObjects;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets._Project._scripts._core.Inventory
 {
