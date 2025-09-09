@@ -1,5 +1,4 @@
 ﻿using Assets._Project._scripts._core.Events;
-using System;
 using UnityEngine;
 
 namespace Assets._Project._scripts.Player

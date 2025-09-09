@@ -1,5 +1,4 @@
-using NUnit.Framework;
-using System;
+using Assets._Project._scripts.Levels;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,12 +6,14 @@ using UnityEngine.EventSystems;
 public class RoadGenerator : MonoBehaviour
 {
     public static RoadGenerator Instance;
-    public GameObject RoadPrefab;
     public float maxSpeed = 10;
     public int maxRoadCount = 5;
     public GameObject menuUI;
 
-    private List<GameObject> roads = new();
+    [SerializeField] private Level _level;
+    private int _currentSegment;
+
+    private List<LevelSegment> roads = new();
     private float speed;
 
     private void Awake()
@@ -22,6 +23,8 @@ public class RoadGenerator : MonoBehaviour
 
     void Start()
     {
+        _currentSegment = 1;
+        _level.Initialize();
         ResetLevel();
         SwipeManager.Instance.enabled = false;
     }
@@ -32,14 +35,14 @@ public class RoadGenerator : MonoBehaviour
 
         if (speed == 0) return;
 
-        foreach (GameObject road in roads)
+        foreach (LevelSegment road in roads)
         {
             road.transform.position -= new Vector3(0, 0, speed * Time.deltaTime);
         }
 
-        if (roads[0].transform.position.z < -15)
+        if (roads[0].transform.position.z < -1 * roads[0].Length)
         {
-            Destroy(roads[0]);
+            Destroy(roads[0].gameObject);
             roads.RemoveAt(0);
             CreateNextRoad();
         }
@@ -68,21 +71,30 @@ public class RoadGenerator : MonoBehaviour
         {
             CreateNextRoad();
         }
-        
     }
 
     private void CreateNextRoad()
     {
         Vector3 pos = Vector3.zero;
 
+        LevelSegment nextSegment = _level.GetSegment(_currentSegment);
+
         if (roads.Count > 0)
         {
-            pos = roads[roads.Count - 1].transform.position + new Vector3(0, 0, 15);
+            pos = roads[roads.Count - 1].transform.position + new Vector3(0, 0, nextSegment.Length);
         }
 
-        GameObject go = Instantiate(RoadPrefab, pos, Quaternion.identity);
-        go.transform.SetParent(transform);
+        if (nextSegment != null)
+        {
+            LevelSegment segment = Instantiate(nextSegment, pos, Quaternion.identity);
+            segment.transform.SetParent(transform);
         
-        roads.Add(go);
+            roads.Add(segment);
+
+            _currentSegment++;
+        } else
+        {
+            Debug.Log("Уровень зщакончен");
+        }
     }
 }
