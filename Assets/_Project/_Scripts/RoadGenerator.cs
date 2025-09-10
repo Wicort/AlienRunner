@@ -63,7 +63,7 @@ public class RoadGenerator : MonoBehaviour
 
         while (roads.Count > 0)
         {
-            Destroy(roads[0]);
+            Destroy(roads[0].gameObject);
             roads.RemoveAt(0);
         }
 
@@ -78,23 +78,25 @@ public class RoadGenerator : MonoBehaviour
         Vector3 pos = Vector3.zero;
 
         LevelSegment nextSegment = _level.GetSegment(_currentSegment);
+        if (nextSegment == null)
+        {
+            Debug.Log("Уровень закончен");
+            return;
+        }
 
         if (roads.Count > 0)
         {
-            pos = roads[roads.Count - 1].transform.position + new Vector3(0, 0, nextSegment.Length);
+            LevelSegment lastSegment = roads[roads.Count - 1];
+            // Смещение: от центра последнего сегмента на половину его длины вперёд + половину новой длины вперёд
+            float offset = (lastSegment.Length / 2f) + (nextSegment.Length / 2f);
+            pos = lastSegment.transform.position + new Vector3(0, 0, offset);
         }
+        // Если это первый сегмент — ставим в (0,0,0)
 
-        if (nextSegment != null)
-        {
-            LevelSegment segment = Instantiate(nextSegment, pos, Quaternion.identity);
-            segment.transform.SetParent(transform);
-        
-            roads.Add(segment);
+        LevelSegment newSegment = Instantiate(nextSegment, pos, Quaternion.identity);
+        newSegment.transform.SetParent(transform);
+        roads.Add(newSegment);
 
-            _currentSegment++;
-        } else
-        {
-            Debug.Log("Уровень зщакончен");
-        }
+        _currentSegment++;
     }
 }
