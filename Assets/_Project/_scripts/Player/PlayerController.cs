@@ -1,3 +1,4 @@
+using Assets._Project._scripts;
 using System.Collections;
 using UnityEngine;
 
@@ -116,6 +117,7 @@ public class PlayerController : MonoBehaviour
     public void StartGame()
     {
         RoadGenerator.Instance.StartLevel();
+        CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.GameplayCamera);
         animator.SetBool("IsStarted", true);
     }
 
