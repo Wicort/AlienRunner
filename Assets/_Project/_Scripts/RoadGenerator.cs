@@ -1,11 +1,11 @@
+using Assets._Project._scripts._core;
 using Assets._Project._scripts.Levels;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class RoadGenerator : MonoBehaviour
+public class RoadGenerator : Singleton<RoadGenerator>
 {
-    public static RoadGenerator Instance;
     public float maxSpeed = 10;
     public int maxRoadCount = 5;
     public GameObject menuUI;
@@ -15,11 +15,6 @@ public class RoadGenerator : MonoBehaviour
 
     private List<LevelSegment> roads = new();
     private float speed;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     void Start()
     {
@@ -46,7 +41,6 @@ public class RoadGenerator : MonoBehaviour
             roads.RemoveAt(0);
             CreateNextRoad();
         }
-
     }
 
     public void StartLevel()
@@ -87,11 +81,9 @@ public class RoadGenerator : MonoBehaviour
         if (roads.Count > 0)
         {
             LevelSegment lastSegment = roads[roads.Count - 1];
-            // Смещение: от центра последнего сегмента на половину его длины вперёд + половину новой длины вперёд
             float offset = (lastSegment.Length / 2f) + (nextSegment.Length / 2f);
             pos = lastSegment.transform.position + new Vector3(0, 0, offset);
         }
-        // Если это первый сегмент — ставим в (0,0,0)
 
         LevelSegment newSegment = Instantiate(nextSegment, pos, Quaternion.identity);
         newSegment.transform.SetParent(transform);
