@@ -25,6 +25,11 @@ namespace Assets._Project._scripts.Levels
 
             foreach (LevelBlock block in _blockList)
             {
+                if (block.LevelSegments.Count == 0)
+                {
+                    continue;
+                }
+
                 if (index >= block.Count)
                 {
                     index -= block.Count;
