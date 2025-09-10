@@ -1,5 +1,6 @@
 using Assets._Project._scripts._core;
 using Assets._Project._scripts.Levels;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,7 +19,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
 
     void Start()
     {
-        _currentSegment = 1;
+        
         _level.Initialize();
         ResetLevel();
         SwipeManager.Instance.enabled = false;
@@ -45,13 +46,22 @@ public class RoadGenerator : Singleton<RoadGenerator>
 
     public void StartLevel()
     {
-        speed = maxSpeed;
+        
         menuUI.SetActive(false);
+        StartCoroutine(Run());
+    }
+
+    private IEnumerator Run()
+    {
+        yield return new WaitForSeconds(.7f);
+
+        speed = maxSpeed;
         SwipeManager.Instance.enabled = true;
     }
 
     public void ResetLevel()
     {
+        _currentSegment = 0;
         speed = 0;
         menuUI.SetActive(true);
 

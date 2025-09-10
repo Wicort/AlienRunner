@@ -22,20 +22,22 @@ namespace Assets._Project._scripts.Levels
         public LevelSegment GetSegment(int index)
         {
             if (index >= _levelLength) return null;
-            LevelSegment next = null;
 
-            foreach (LevelBlock block in _blockList) 
+            foreach (LevelBlock block in _blockList)
             {
-                if (index > block.Count)
+                if (index >= block.Count)
+                {
                     index -= block.Count;
+                }
                 else
                 {
+                    // Выбираем случайный сегмент из этого блока
                     int x = Random.Range(0, block.LevelSegments.Count);
-                    next = block.LevelSegments[x];
+                    return block.LevelSegments[x];
                 }
             }
 
-            return next;
+            return null; // never reached
         }
     }
 }

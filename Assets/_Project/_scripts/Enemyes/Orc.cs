@@ -13,7 +13,6 @@ namespace Assets._Project._scripts.Enemyes
         {
             if (other.TryGetComponent(out PlayerComponent player))
             {
-                Debug.Log("Player trigger");
                 _animator.SetTrigger("Attack");
                 StartCoroutine(Run());
             }
