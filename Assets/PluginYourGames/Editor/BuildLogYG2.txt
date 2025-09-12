@@ -1,3 +1,3 @@
-Build path: D:/github/alien-runner/Build
-Build number: 2
+Build path: D:/github/alien-runner/Build/AlienRunner
+Build number: 3
 PluginYG version: 2.0032

@@ -1,38 +1,41 @@
 using Assets._Project._scripts;
+using System;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public float laneOffset = 2f;
-    public float laneChangeSpeed = 10f;
-    public float jumpPower = 15f;
-    public float jumpGravty = -40f;
-    public Animator animator;
+    [SerializeField] private float _laneOffset = 2f;
+    [SerializeField] private float _laneChangeSpeed = 10f;
+    [SerializeField] private float _jumpPower = 15f;
+    [SerializeField] private float _jumpGravty = -40f;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private CapsuleCollider _collider;
     
-
-    private Rigidbody rb;
-    private float pointStart;
-    private float pointFinish;
-    private bool isMoving;
-    private Coroutine movingCoroutine;
-    private float lastVectorX;
-    private Vector3 startGamePosition;
-    private Quaternion startGameRotation;
-    private bool isJumping;
-    private float realGravity = -9.8f;
+    private Rigidbody _rb;
+    private float _pointStart;
+    private float _pointFinish;
+    private bool _isMoving;
+    private Coroutine _movingCoroutine;
+    private float _lastVectorX;
+    private Vector3 _startGamePosition;
+    private Quaternion _startGameRotation;
+    private bool _isJumping;
+    private bool _isSliding;
+    private float _realGravity = -9.8f;
 
     private int IsStartedHash = Animator.StringToHash("IsStarted");
     private int GroundingHash = Animator.StringToHash("Grounding");
     private int JumpHash = Animator.StringToHash("Jump");
+    private int SlideHash = Animator.StringToHash("Slide");
 
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        startGamePosition = transform.position;
-        startGameRotation = transform.rotation;
+        _rb = GetComponent<Rigidbody>();
+        _startGamePosition = transform.position;
+        _startGameRotation = transform.rotation;
 
         SwipeManager.Instance.MoveEvent += MovePlayer;
     }
@@ -44,28 +47,50 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer(bool[] swipes)
     {
-        if (swipes[(int)SwipeManager.Direction.Left] && pointFinish > -laneOffset)
+        if (swipes[(int)SwipeManager.Direction.Left] && _pointFinish > -_laneOffset)
         {
-            MoveHorizontal(-laneChangeSpeed);
+            MoveHorizontal(-_laneChangeSpeed);
         }
 
-        if (swipes[(int)SwipeManager.Direction.Right] && pointFinish < laneOffset)
+        if (swipes[(int)SwipeManager.Direction.Right] && _pointFinish < _laneOffset)
         {
-            MoveHorizontal(laneChangeSpeed);
+            MoveHorizontal(_laneChangeSpeed);
         }
 
-        if (swipes[(int)SwipeManager.Direction.Up] && !isJumping)
+        if (swipes[(int)SwipeManager.Direction.Up] && !_isJumping && !_isSliding)
         {
             Jump();
         }
+
+        if (swipes[(int)SwipeManager.Direction.Down] /*&& !_isJumping*/ && !_isSliding)
+        {
+            Slide();
+        }
+    }
+
+    private void Slide()
+    {
+        _isSliding = true;
+        _animator.SetTrigger(SlideHash);
+        _collider.height = 1;
+        _collider.center = new Vector3(0, 0.5f,0);
+        StartCoroutine(StopSlidingCoroutine());
+    }
+
+    private IEnumerator StopSlidingCoroutine()
+    {
+        yield return new WaitForSeconds(.7f);
+        _isSliding = false;
+        _collider.height = 2;
+        _collider.center = new Vector3(0, 1f, 0);
     }
 
     private void Jump()
     {
-        isJumping = true;
-        rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-        Physics.gravity = new Vector3(0, jumpGravty, 0);
-        animator.SetTrigger(JumpHash);
+        _isJumping = true;
+        _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+        Physics.gravity = new Vector3(0, _jumpGravty, 0);
+        _animator.SetTrigger(JumpHash);
         StartCoroutine(StopJumpingCoroutine());
     }
 
@@ -74,66 +99,65 @@ public class PlayerController : MonoBehaviour
         do
         {
             yield return new WaitForFixedUpdate();
-        } while (rb.linearVelocity.y != 0);
+        } while (_rb.linearVelocity.y != 0);
 
-        isJumping = false;
-        Physics.gravity = new Vector3(0, realGravity, 0);
+        _isJumping = false;
+        Physics.gravity = new Vector3(0, _realGravity, 0);
     }
 
     private void MoveHorizontal(float speed)
     {
-        pointStart = pointFinish;
-        pointFinish += Mathf.Sign(speed) * laneOffset;
+        _pointStart = _pointFinish;
+        _pointFinish += Mathf.Sign(speed) * _laneOffset;
 
-        if (isMoving) 
+        if (_isMoving) 
         { 
-            StopCoroutine(movingCoroutine); 
-            isMoving = false;
+            StopCoroutine(_movingCoroutine); 
+            _isMoving = false;
         }
-        movingCoroutine = StartCoroutine(MoveCoroutine(speed));
+        _movingCoroutine = StartCoroutine(MoveCoroutine(speed));
     }
 
     IEnumerator MoveCoroutine (float vectorX)
     {
-        isMoving = true;
-        while (Mathf.Abs(pointStart - transform.position.x) < laneOffset)
+        _isMoving = true;
+        while (Mathf.Abs(_pointStart - transform.position.x) < _laneOffset)
         {
             yield return new WaitForFixedUpdate();
 
-            rb.linearVelocity = new Vector3(vectorX, rb.linearVelocity.y, 0);
-            lastVectorX = vectorX;
-            float x = Mathf.Clamp(transform.position.x, Mathf.Min(pointStart, pointFinish), Mathf.Max(pointStart, pointFinish));
+            _rb.linearVelocity = new Vector3(vectorX, _rb.linearVelocity.y, 0);
+            _lastVectorX = vectorX;
+            float x = Mathf.Clamp(transform.position.x, Mathf.Min(_pointStart, _pointFinish), Mathf.Max(_pointStart, _pointFinish));
             transform.position = new Vector3(x, transform.position.y, transform.position.z);
         }
 
-        rb.linearVelocity = Vector3.zero;
-        transform.position = new Vector3(pointFinish, transform.position.y, transform.position.z);
+        _rb.linearVelocity = Vector3.zero;
+        transform.position = new Vector3(_pointFinish, transform.position.y, transform.position.z);
 
         if (transform.position.y > 1)
         {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, -10, rb.linearVelocity.z);
+            _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, -10, _rb.linearVelocity.z);
         }
 
-        isMoving = false;
+        _isMoving = false;
     }
 
     public void StartGame()
     {
         RoadGenerator.Instance.StartLevel();
         CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.GameplayCamera);
-        animator.SetBool(IsStartedHash, true);
+        _animator.SetBool(IsStartedHash, true);
     }
-
 
     public void ResetGame()
     {
-        rb.linearVelocity = Vector3.zero;
-        pointStart = 0;
-        pointFinish = 0;
-        transform.position = startGamePosition;
-        transform.rotation = startGameRotation;
+        _rb.linearVelocity = Vector3.zero;
+        _pointStart = 0;
+        _pointFinish = 0;
+        transform.position = _startGamePosition;
+        transform.rotation = _startGameRotation;
         RoadGenerator.Instance.ResetLevel();
-        animator.SetBool(IsStartedHash, false);
+        _animator.SetBool(IsStartedHash, false);
         CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.MenuCamera);
     }
 
@@ -141,7 +165,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Ramp")
         {
-            rb.constraints |= RigidbodyConstraints.FreezePositionZ;
+            _rb.constraints |= RigidbodyConstraints.FreezePositionZ;
         }
 
         if (other.gameObject.tag == "Lose")
@@ -154,8 +178,8 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Ramp")
         {
-            animator.SetTrigger(GroundingHash);
-            rb.constraints &= ~RigidbodyConstraints.FreezePositionZ;
+            _animator.SetTrigger(GroundingHash);
+            _rb.constraints &= ~RigidbodyConstraints.FreezePositionZ;
         }
     }
 
@@ -163,13 +187,13 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            animator.SetTrigger(GroundingHash);
+            _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
+            _animator.SetTrigger(GroundingHash);
         }
 
         if (collision.gameObject.tag == "NotLose")
         {
-            MoveHorizontal(-lastVectorX);
+            MoveHorizontal(-_lastVectorX);
         }
     }
 
@@ -177,9 +201,9 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "RampPlane")
         {
-            if (rb.linearVelocity.x == 0 && !isJumping)
+            if (_rb.linearVelocity.x == 0 && !_isJumping)
             {
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, -10, rb.linearVelocity.z);
+                _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, -10, _rb.linearVelocity.z);
             }
         }
     }
