@@ -46,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Project._scripts.Levels.Level
   _blockList:
   - LevelSegments:
-    - {fileID: 2358646494344491759, guid: 730f17b5c2a7486458b34b9d30c40455, type: 3}
-    Count: 3
+    - {fileID: 2358646494344491759, guid: f5d49a735a447ee4ca024c1b530f3f6f, type: 3}
+    Count: 1
   - LevelSegments:
-    - {fileID: 2358646494344491759, guid: 257aa9b263a093f4ab744283d0974928, type: 3}
     - {fileID: 2358646494344491759, guid: 730f17b5c2a7486458b34b9d30c40455, type: 3}
+    - {fileID: 2358646494344491759, guid: 257aa9b263a093f4ab744283d0974928, type: 3}
     Count: 50

@@ -1,4 +1,5 @@
 using Assets._Project._scripts._core;
+using Assets._Project._scripts.HUD;
 using Assets._Project._scripts.Levels;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
 {
     public float maxSpeed = 10;
     public int maxRoadCount = 5;
-    public GameObject menuUI;
+    //public GameObject menuUI;
 
     [SerializeField] private Level _level;
     private int _currentSegment;
@@ -22,7 +23,6 @@ public class RoadGenerator : Singleton<RoadGenerator>
         
         _level.Initialize();
         ResetLevel();
-        SwipeManager.Instance.enabled = false;
     }
 
     void Update()
@@ -46,8 +46,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
 
     public void StartLevel()
     {
-        
-        menuUI.SetActive(false);
+        UIController.Instance.SwitchTo(UIController.UIMode.GameplayMode);
         StartCoroutine(Run());
     }
 
@@ -61,9 +60,10 @@ public class RoadGenerator : Singleton<RoadGenerator>
 
     public void ResetLevel()
     {
+        SwipeManager.Instance.enabled = false;
         _currentSegment = 0;
         speed = 0;
-        menuUI.SetActive(true);
+        UIController.Instance.SwitchTo(UIController.UIMode.MenuMode);
 
         while (roads.Count > 0)
         {

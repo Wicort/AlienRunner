@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour
     private bool isJumping;
     private float realGravity = -9.8f;
 
+    private int IsStartedHash = Animator.StringToHash("IsStarted");
+    private int GroundingHash = Animator.StringToHash("Grounding");
+    private int JumpHash = Animator.StringToHash("Jump");
+
 
     private void Start()
     {
@@ -61,7 +65,7 @@ public class PlayerController : MonoBehaviour
         isJumping = true;
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         Physics.gravity = new Vector3(0, jumpGravty, 0);
-        animator.SetTrigger("Jump");
+        animator.SetTrigger(JumpHash);
         StartCoroutine(StopJumpingCoroutine());
     }
 
@@ -92,7 +96,6 @@ public class PlayerController : MonoBehaviour
     IEnumerator MoveCoroutine (float vectorX)
     {
         isMoving = true;
-        //animator.SetTrigger(Mathf.Sign(vectorX) < 0 ? "RightStrafe" : "LeftStrafe");
         while (Mathf.Abs(pointStart - transform.position.x) < laneOffset)
         {
             yield return new WaitForFixedUpdate();
@@ -118,7 +121,7 @@ public class PlayerController : MonoBehaviour
     {
         RoadGenerator.Instance.StartLevel();
         CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.GameplayCamera);
-        animator.SetBool("IsStarted", true);
+        animator.SetBool(IsStartedHash, true);
     }
 
 
@@ -130,7 +133,8 @@ public class PlayerController : MonoBehaviour
         transform.position = startGamePosition;
         transform.rotation = startGameRotation;
         RoadGenerator.Instance.ResetLevel();
-        animator.SetBool("IsStarted", false);
+        animator.SetBool(IsStartedHash, false);
+        CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.MenuCamera);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -150,7 +154,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Ramp")
         {
-            animator.SetTrigger("Grounding");
+            animator.SetTrigger(GroundingHash);
             rb.constraints &= ~RigidbodyConstraints.FreezePositionZ;
         }
     }
@@ -160,7 +164,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            animator.SetTrigger("Grounding");
+            animator.SetTrigger(GroundingHash);
         }
 
         if (collision.gameObject.tag == "NotLose")
