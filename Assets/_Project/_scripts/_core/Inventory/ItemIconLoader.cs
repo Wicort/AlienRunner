@@ -14,7 +14,6 @@ namespace Assets._Project._scripts._core.Inventory
             if (ItemCache.TryGetValue(type, out Item cached))
                 return cached;
 
-            // Загружаем все объекты из папки
             Item[] items = Resources.LoadAll<Item>("Configs/Items");
             foreach (var item in items)
             {
