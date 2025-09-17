@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Assets._Project._scripts._core.PickableObjects
 {
+    [CreateAssetMenu(fileName = "NewDataItem", menuName = "Items/DataItem")]
     public class DataItem : Item, IPickableItem
     {
         public int dataAmount = 1;
