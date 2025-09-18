@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace Assets._Project._scripts._core.PickableObjects.Items
+namespace Assets._Project._scripts._core.PickableObjects
 {
     [CreateAssetMenu(fileName = "NewBulletItem", menuName = "Items/BulletItem")]
     public class BulletItem : Item, IPickableItem

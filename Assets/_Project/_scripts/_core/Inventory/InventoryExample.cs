@@ -1,6 +1,5 @@
 ﻿using Assets._Project._scripts._core.Events;
 using Assets._Project._scripts._core.PickableObjects;
-using Assets._Project._scripts._core.PickableObjects.Items;
 using System;
 using UnityEngine;
 
