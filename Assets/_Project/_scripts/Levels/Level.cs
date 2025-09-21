@@ -19,9 +19,19 @@ namespace Assets._Project._scripts.Levels
             }
         }
 
-        public LevelSegment GetSegment(int index)
+        public LevelSegment GetSegment(int index, bool endless)
         {
-            if (index >= _levelLength) return null;
+            Debug.Log($"index {index}, _levelLength {_levelLength}");
+            if (index >= _levelLength)
+            {
+                if (endless)
+                {
+                    index = index % _levelLength;
+                    Debug.Log($"new index {index}, _levelLength {_levelLength}");
+                }
+                else
+                    return null;
+            }
 
             foreach (LevelBlock block in _blockList)
             {

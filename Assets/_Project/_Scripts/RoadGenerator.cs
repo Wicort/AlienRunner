@@ -8,9 +8,9 @@ using UnityEngine.EventSystems;
 
 public class RoadGenerator : Singleton<RoadGenerator>
 {
-    public float maxSpeed = 10;
-    public int maxRoadCount = 5;
-    //public GameObject menuUI;
+    [SerializeField] private float _maxSpeed = 10;
+    [SerializeField] private int _maxRoadCount = 5;
+    [SerializeField] private bool _endless = true;
 
     [SerializeField] private Level _level;
     private int _currentSegment;
@@ -40,7 +40,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
         {
             Destroy(roads[0].gameObject);
             roads.RemoveAt(0);
-            CreateNextRoad();
+            CreateNextRoad(_endless);
         }
     }
 
@@ -54,7 +54,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
     {
         yield return new WaitForSeconds(.7f);
 
-        speed = maxSpeed;
+        speed = _maxSpeed;
         SwipeManager.Instance.enabled = true;
     }
 
@@ -71,17 +71,17 @@ public class RoadGenerator : Singleton<RoadGenerator>
             roads.RemoveAt(0);
         }
 
-        for (int i = 0; i < maxRoadCount; i++)
+        for (int i = 0; i < _maxRoadCount; i++)
         {
-            CreateNextRoad();
+            CreateNextRoad(_endless);
         }
     }
 
-    private void CreateNextRoad()
+    private void CreateNextRoad(bool endless)
     {
         Vector3 pos = Vector3.zero;
 
-        LevelSegment nextSegment = _level.GetSegment(_currentSegment);
+        LevelSegment nextSegment = _level.GetSegment(_currentSegment, endless);
         if (nextSegment == null)
         {
             Debug.Log("Уровень закончен");

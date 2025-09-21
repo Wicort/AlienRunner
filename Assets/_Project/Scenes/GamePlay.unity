@@ -3034,8 +3034,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e00b916f3cd2a334aafe49dfc0e66c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
-  maxRoadCount: 6
+  _maxSpeed: 10
+  _maxRoadCount: 5
+  _endless: 1
   _level: {fileID: 2572843477576445114, guid: 00a68d4538b38de4bb6a72a13dca1318, type: 3}
 --- !u!4 &2123772801
 Transform:
