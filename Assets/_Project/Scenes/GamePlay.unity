@@ -2368,7 +2368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _laneOffset: 2
   _laneChangeSpeed: 10
-  _jumpPower: 15
+  _jumpPower: 12
   _jumpGravty: -40
   _animator: {fileID: 1807703768}
   _collider: {fileID: 1677007794}

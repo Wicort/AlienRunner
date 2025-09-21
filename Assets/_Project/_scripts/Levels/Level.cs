@@ -6,6 +6,8 @@ namespace Assets._Project._scripts.Levels
     public class Level : MonoBehaviour
     {        
         [SerializeField] private List<LevelBlock> _blockList = new();
+        [SerializeField] private LevelSegment _bossSegment;
+
         private int _levelLength;
 
         public int LevelLength => _levelLength;
@@ -30,7 +32,7 @@ namespace Assets._Project._scripts.Levels
                     Debug.Log($"new index {index}, _levelLength {_levelLength}");
                 }
                 else
-                    return null;
+                    return _bossSegment;
             }
 
             foreach (LevelBlock block in _blockList)
@@ -49,7 +51,7 @@ namespace Assets._Project._scripts.Levels
                     // Выбираем случайный сегмент из этого блока
                     int x = Random.Range(0, block.LevelSegments.Count);
                     return block.LevelSegments[x];
-                }
+                } 
             }
 
             return null; // never reached
