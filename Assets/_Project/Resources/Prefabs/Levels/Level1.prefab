@@ -53,3 +53,4 @@ MonoBehaviour:
     - {fileID: 2358646494344491759, guid: 730f17b5c2a7486458b34b9d30c40455, type: 3}
     - {fileID: 2358646494344491759, guid: 257aa9b263a093f4ab744283d0974928, type: 3}
     Count: 5
+  _bossSegment: {fileID: 2358646494344491759, guid: 46da87cd9a08eee4ea5934bf1d67d727, type: 3}
