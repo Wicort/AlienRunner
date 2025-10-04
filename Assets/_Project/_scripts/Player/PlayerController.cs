@@ -1,4 +1,5 @@
 using Assets._Project._scripts;
+using Assets._Project._scripts.Weapon;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpGravty = -40f;
     [SerializeField] private Animator _animator;
     [SerializeField] private CapsuleCollider _collider;
+    [SerializeField] private Gun _gun;
     
     private Rigidbody _rb;
     private float _pointStart;
@@ -25,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private bool _isSliding;
     private float _realGravity = -9.8f;
 
+    private Coroutine ShootingCoroutine;
+
     private int IsStartedHash = Animator.StringToHash("IsStarted");
     private int GroundingHash = Animator.StringToHash("Grounding");
     private int JumpHash = Animator.StringToHash("Jump");
@@ -36,6 +40,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _startGamePosition = transform.position;
         _startGameRotation = transform.rotation;
+        ShootingCoroutine = StartCoroutine(GunShooting());
 
         SwipeManager.Instance.MoveEvent += MovePlayer;
     }
@@ -43,6 +48,15 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         SwipeManager.Instance.MoveEvent -= MovePlayer;
+    }
+
+    private IEnumerator GunShooting()
+    {
+        while (true)
+        {
+            _gun.Shoot();
+            yield return new WaitForSeconds(.3f);
+        }
     }
 
     private void MovePlayer(bool[] swipes)
@@ -62,7 +76,7 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
-        if (swipes[(int)SwipeManager.Direction.Down] /*&& !_isJumping*/ && !_isSliding)
+        if (swipes[(int)SwipeManager.Direction.Down] && !_isSliding)
         {
             Slide();
         }
@@ -147,6 +161,7 @@ public class PlayerController : MonoBehaviour
         RoadGenerator.Instance.StartLevel();
         CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.GameplayCamera);
         _animator.SetBool(IsStartedHash, true);
+        StopCoroutine(ShootingCoroutine);
     }
 
     public void ResetGame()
@@ -158,6 +173,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = _startGameRotation;
         RoadGenerator.Instance.ResetLevel();
         _animator.SetBool(IsStartedHash, false);
+        ShootingCoroutine = StartCoroutine(GunShooting());
         CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.MenuCamera);
     }
 

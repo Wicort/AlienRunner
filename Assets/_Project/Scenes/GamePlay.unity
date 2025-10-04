@@ -2372,6 +2372,7 @@ MonoBehaviour:
   _jumpGravty: -40
   _animator: {fileID: 1807703768}
   _collider: {fileID: 1677007794}
+  _gun: {fileID: 1807703769}
 --- !u!4 &1677007793
 Transform:
   m_ObjectHideFlags: 0
@@ -2555,6 +2556,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 551514764222547779, guid: 4f1b54df365ab564ebba7896803b388a, type: 3}
+      propertyPath: _bulletPrefab
+      value: 
+      objectReference: {fileID: 1013138374998078966, guid: 54eacc7264e023d48ae49025e9597c9c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2570,6 +2575,17 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 95580693851878194, guid: 4f1b54df365ab564ebba7896803b388a, type: 3}
   m_PrefabInstance: {fileID: 1807703766}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1807703769 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 551514764222547779, guid: 4f1b54df365ab564ebba7896803b388a, type: 3}
+  m_PrefabInstance: {fileID: 1807703766}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa7dedc9d0654e4091634db7bf77c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._Project._scripts.Weapon.Gun
 --- !u!1 &1843397972
 GameObject:
   m_ObjectHideFlags: 0
