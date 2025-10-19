@@ -11,7 +11,6 @@ namespace Assets._Project._scripts.Weapon
 
         public void Shoot()
         {
-            Debug.Log("Shoot");
             StartCoroutine(PlayParticleEffect());
             Instantiate(_bulletPrefab, _shootPoint.transform);
         }

@@ -23,13 +23,13 @@ namespace Assets._Project._scripts.Levels
 
         public LevelSegment GetSegment(int index, bool endless)
         {
-            Debug.Log($"index {index}, _levelLength {_levelLength}");
+            //Debug.Log($"index {index}, _levelLength {_levelLength}");
             if (index >= _levelLength)
             {
                 if (endless)
                 {
                     index = index % _levelLength;
-                    Debug.Log($"new index {index}, _levelLength {_levelLength}");
+                    //Debug.Log($"new index {index}, _levelLength {_levelLength}");
                 }
                 else
                     return _bossSegment;

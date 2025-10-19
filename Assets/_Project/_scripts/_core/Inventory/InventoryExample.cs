@@ -47,7 +47,7 @@ namespace Assets._Project._scripts._core.Inventory
             EventBus.Instance?.Unsubscribe<SoftCurrencyChangedEvent>(OnSoftCurrencyChanged);
             EventBus.Instance?.Unsubscribe<HardCurrencyChangedEvent>(OnHardCurrencyChanged);
             EventBus.Instance?.Unsubscribe<DataCollectedEvent>(OnDataCollected);
-            EventBus.Instance?.Subscribe<BulletCollectedEvent>(OnBulletCollected);
+            EventBus.Instance?.Unsubscribe<BulletCollectedEvent>(OnBulletCollected);
         }
     }
 }

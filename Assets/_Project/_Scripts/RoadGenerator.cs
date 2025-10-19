@@ -1,5 +1,4 @@
 using Assets._Project._scripts._core;
-using Assets._Project._scripts.HUD;
 using Assets._Project._scripts.Levels;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,7 +45,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
 
     public void StartLevel()
     {
-        UIController.Instance.SwitchTo(UIController.UIMode.GameplayMode);
+        //UIController.Instance.SwitchTo(UIController.UIMode.GameplayMode);
         StartCoroutine(Run());
     }
 
@@ -63,7 +62,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
         SwipeManager.Instance.enabled = false;
         _currentSegment = 0;
         speed = 0;
-        UIController.Instance.SwitchTo(UIController.UIMode.MenuMode);
+        //UIController.Instance.SwitchTo(UIController.UIMode.MenuMode);
 
         while (roads.Count > 0)
         {

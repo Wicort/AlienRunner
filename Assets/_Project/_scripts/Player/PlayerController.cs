@@ -1,4 +1,5 @@
 using Assets._Project._scripts;
+using Assets._Project._scripts._core.Events;
 using Assets._Project._scripts.Weapon;
 using System;
 using System.Collections;
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
         ShootingCoroutine = StartCoroutine(GunShooting());
 
         SwipeManager.Instance.MoveEvent += MovePlayer;
+        EventBus.Instance.Subscribe<RunStartedEvent>(StartGame);
     }
 
     private void OnDestroy()
@@ -156,12 +158,11 @@ public class PlayerController : MonoBehaviour
         _isMoving = false;
     }
 
-    public void StartGame()
+    public void StartGame(RunStartedEvent @event)
     {
         RoadGenerator.Instance.StartLevel();
-        CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.GameplayCamera);
         _animator.SetBool(IsStartedHash, true);
-        StopCoroutine(ShootingCoroutine);
+        StopAllCoroutines();
     }
 
     public void ResetGame()

@@ -490,6 +490,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Veh_Car_Medium_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1192821333268524, guid: 368e0ba8a53b943428fc4dae621dcdc1, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4990659703876504, guid: 368e0ba8a53b943428fc4dae621dcdc1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.19
