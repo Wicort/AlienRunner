@@ -23,6 +23,7 @@ namespace Assets._Project._scripts._core.StateMachine.States
 
             EventBus.Instance.Subscribe<RunStartedEvent>(OnRunStarted);
             EventBus.Instance.Subscribe<PlayerDeathEvent>(OnPlayerDeath);
+            EventBus.Instance.Subscribe<BossStartEvent>(OnBossStarted);
         }
 
         public void Exit()
@@ -31,6 +32,7 @@ namespace Assets._Project._scripts._core.StateMachine.States
 
             EventBus.Instance.Unsubscribe<RunStartedEvent>(OnRunStarted);
             EventBus.Instance.Unsubscribe<PlayerDeathEvent>(OnPlayerDeath);
+            EventBus.Instance.Unsubscribe<BossStartEvent>(OnBossStarted);
         }
 
         private void OnRunStarted(RunStartedEvent @event)
@@ -46,6 +48,11 @@ namespace Assets._Project._scripts._core.StateMachine.States
             _stateMachine.Enter<DeathState>();
             //_stateMachine.StateData.UIController.SwitchTo(HUD.UIController.UIMode.GameplayMode);
             //CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.GameplayCamera);
+        }
+
+        private void OnBossStarted(BossStartEvent @event)
+        {
+            _stateMachine.Enter<BossState>();
         }
     }
 }
