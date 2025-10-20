@@ -1,7 +1,5 @@
-using Assets._Project._scripts;
 using Assets._Project._scripts._core.Events;
 using Assets._Project._scripts.Weapon;
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -22,8 +20,8 @@ public class PlayerController : MonoBehaviour
     private bool _isMoving;
     private Coroutine _movingCoroutine;
     private float _lastVectorX;
-    private Vector3 _startGamePosition;
-    private Quaternion _startGameRotation;
+    
+    
     private bool _isJumping;
     private bool _isSliding;
     private float _realGravity = -9.8f;
@@ -39,8 +37,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _startGamePosition = transform.position;
-        _startGameRotation = transform.rotation;
+        
         ShootingCoroutine = StartCoroutine(GunShooting());
 
         SwipeManager.Instance.MoveEvent += MovePlayer;
@@ -49,7 +46,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        SwipeManager.Instance.MoveEvent -= MovePlayer;
+        SwipeManager.Instance.MoveEvent -= MovePlayer; 
     }
 
     private IEnumerator GunShooting()
@@ -160,7 +157,6 @@ public class PlayerController : MonoBehaviour
 
     public void StartGame(RunStartedEvent @event)
     {
-        RoadGenerator.Instance.StartLevel();
         _animator.SetBool(IsStartedHash, true);
         StopAllCoroutines();
     }
@@ -170,12 +166,11 @@ public class PlayerController : MonoBehaviour
         _rb.linearVelocity = Vector3.zero;
         _pointStart = 0;
         _pointFinish = 0;
-        transform.position = _startGamePosition;
-        transform.rotation = _startGameRotation;
-        RoadGenerator.Instance.ResetLevel();
+        
         _animator.SetBool(IsStartedHash, false);
         ShootingCoroutine = StartCoroutine(GunShooting());
-        CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.MenuCamera);
+
+        EventBus.Instance?.Publish(new PlayerDeathEvent { });
     }
 
     private void OnTriggerEnter(Collider other)

@@ -11,6 +11,9 @@ namespace Assets._Project._scripts._core.StateMachine
 
         public PlayerComponent Player => _playerComponent;
         public UIController UIController => _uiController;
+        public Vector3 StartGamePosition;
+        public Quaternion StartGameRotation;
+
 
         public StateMachineData(PlayerComponent playerComponent, UIController uiController)
         {

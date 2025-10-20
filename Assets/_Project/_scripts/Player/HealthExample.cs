@@ -20,6 +20,11 @@ namespace Assets._Project._scripts.Player
             EventBus.Instance.Subscribe<HealPickedEvent>(OnHealthPicked);
         }
 
+        private void OnDisable()
+        {
+            EventBus.Instance.Unsubscribe<HealPickedEvent>(OnHealthPicked);
+        }
+
         private void OnHealthPicked(HealPickedEvent @event)
         {
             _health.Add(@event.amount);

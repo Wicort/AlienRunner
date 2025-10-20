@@ -18,16 +18,13 @@ namespace Assets._Project._scripts._core.StateMachine
 
         public GameStateMachine(PlayerComponent playerComponent, UIController uiController)
         {
-            Debug.Log($"playerComponent is null {playerComponent == null}");
-            Debug.Log($"uiController is null {uiController == null}");
-
             _states = new List<IExitableState>()
             {
                 new BootStrapState(this, playerComponent, uiController),
                 new RunState(this),
                 new BossState(this),
+                new DeathState(this, playerComponent, uiController),
             };
-            Debug.Log("State Mashine Created");
 
             Enter<BootStrapState>();
         }

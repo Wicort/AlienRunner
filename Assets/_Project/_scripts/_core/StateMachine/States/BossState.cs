@@ -1,4 +1,6 @@
-﻿namespace Assets._Project._scripts._core.StateMachine.States
+﻿using UnityEngine;
+
+namespace Assets._Project._scripts._core.StateMachine.States
 {
     public class BossState : IState
     {
@@ -10,6 +12,7 @@
 
         public void Enter()
         {
+            Debug.Log("Enter BossState");
         }
 
         public void Exit()
