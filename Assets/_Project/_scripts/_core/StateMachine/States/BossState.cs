@@ -17,7 +17,7 @@ namespace Assets._Project._scripts._core.StateMachine.States
         public void Enter()
         {
             Debug.Log("Enter BossState");
-            _stateMachine.StateData.Player.GetComponent<PlayerController>().enabled = false;
+            RoadGenerator.Instance.StopMoving();
 
             EventBus.Instance.Subscribe<BossKilledEvent>(OnBossKilled);
         }

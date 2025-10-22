@@ -43,6 +43,16 @@ public class RoadGenerator : Singleton<RoadGenerator>
         }
     }
 
+    public void StopMoving()
+    {
+        speed = 0;
+    }
+
+    public void StartMoving()
+    {
+        speed = _maxSpeed;
+    }
+
     public void StartLevel()
     {
         //UIController.Instance.SwitchTo(UIController.UIMode.GameplayMode);
@@ -53,7 +63,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
     {
         yield return new WaitForSeconds(.7f);
 
-        speed = _maxSpeed;
+        StartMoving();
         SwipeManager.Instance.enabled = true;
     }
 
@@ -61,7 +71,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
     {
         SwipeManager.Instance.enabled = false;
         _currentSegment = 0;
-        speed = 0;
+        StopMoving();
         //UIController.Instance.SwitchTo(UIController.UIMode.MenuMode);
 
         while (roads.Count > 0)
