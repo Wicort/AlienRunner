@@ -1,5 +1,6 @@
 using Assets._Project._scripts._core.Events;
 using Assets._Project._scripts.Weapon;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private Coroutine ShootingCoroutine;
 
     private int IsStartedHash = Animator.StringToHash("IsStarted");
+    private int IsBoss = Animator.StringToHash("IsBoss");
     private int GroundingHash = Animator.StringToHash("Grounding");
     private int JumpHash = Animator.StringToHash("Jump");
     private int SlideHash = Animator.StringToHash("Slide");
@@ -42,11 +44,19 @@ public class PlayerController : MonoBehaviour
 
         SwipeManager.Instance.MoveEvent += MovePlayer;
         EventBus.Instance.Subscribe<RunStartedEvent>(StartGame);
+        EventBus.Instance.Subscribe<BossStartEvent>(OnBossStarted);
     }
 
     private void OnDestroy()
     {
-        SwipeManager.Instance.MoveEvent -= MovePlayer; 
+        SwipeManager.Instance.MoveEvent -= MovePlayer;
+        EventBus.Instance.Unsubscribe<RunStartedEvent>(StartGame);
+        EventBus.Instance.Unsubscribe<BossStartEvent>(OnBossStarted);
+    }
+
+    private void OnBossStarted(BossStartEvent @event)
+    {
+        _animator.SetTrigger(IsBoss);
     }
 
     private IEnumerator GunShooting()

@@ -3,7 +3,6 @@ using Assets._Project._scripts.HUD;
 using Assets._Project._scripts.Player;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Assets._Project._scripts._core.StateMachine
 {
