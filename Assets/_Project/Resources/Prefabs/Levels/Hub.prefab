@@ -2121,7 +2121,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8148597565582921470}
-  - component: {fileID: 6394918504635085803}
   m_Layer: 0
   m_Name: Hub
   m_TagString: Untagged
@@ -2147,19 +2146,6 @@ Transform:
   - {fileID: 6311972616570793945}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6394918504635085803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8081533075217521496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 909ae4518572c8546ba78fd045556c49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets._Project._scripts.Levels.LevelSegment
-  _length: 25
 --- !u!1 &8459532526779093581
 GameObject:
   m_ObjectHideFlags: 0

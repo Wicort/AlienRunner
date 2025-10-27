@@ -7,10 +7,14 @@ namespace Assets._Project._scripts._core.StateMachine.States
     public class BootStrapState : IState
     {
         private GameStateMachine _stateMachine;
-        public BootStrapState(GameStateMachine gameStateMachine, PlayerComponent playerComponent, UIController uiController)
+        public BootStrapState(GameStateMachine gameStateMachine, PlayerComponent playerComponent, HubController hubController, UIController uiController)
         {
             _stateMachine = gameStateMachine;
-            _stateMachine.SetStateMachineData(new StateMachineData(playerComponent, uiController));
+            _stateMachine.SetStateMachineData(
+                new StateMachineData(
+                    playerComponent,
+                    hubController,
+                    uiController));
         }
 
 

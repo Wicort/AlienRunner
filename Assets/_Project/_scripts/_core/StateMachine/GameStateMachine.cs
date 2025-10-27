@@ -15,14 +15,15 @@ namespace Assets._Project._scripts._core.StateMachine
         public IExitableState CurrentState => _currentState;
         public StateMachineData StateData => _stateMachineData;
 
-        public GameStateMachine(PlayerComponent playerComponent, UIController uiController)
+        public GameStateMachine(PlayerComponent playerComponent, HubController hubController, UIController uiController)
         {
             _states = new List<IExitableState>()
             {
-                new BootStrapState(this, playerComponent, uiController),
+                new BootStrapState(this, playerComponent, hubController, uiController),
                 new RunState(this),
                 new BossState(this),
-                new DeathState(this, playerComponent, uiController),
+                new DeathState(this),
+                new HubState(this),
             };
 
             Enter<BootStrapState>();

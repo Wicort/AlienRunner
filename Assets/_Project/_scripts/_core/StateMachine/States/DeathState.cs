@@ -8,14 +8,10 @@ namespace Assets._Project._scripts._core.StateMachine
     public class DeathState : IState
     {
         private GameStateMachine _stateMachine;
-        private PlayerComponent _playerComponent;
-        private UIController _uiController;
 
-        public DeathState(GameStateMachine gameStateMachine, PlayerComponent playerComponent, UIController uiController)
+        public DeathState(GameStateMachine gameStateMachine)
         {
             _stateMachine = gameStateMachine;
-            _playerComponent = playerComponent;
-            _uiController = uiController;
         }
 
         public void Enter()

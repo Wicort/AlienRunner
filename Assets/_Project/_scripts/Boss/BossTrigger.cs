@@ -1,5 +1,4 @@
 ﻿using Assets._Project._scripts._core.Events;
-using Assets._Project._scripts._core.Events.Structs;
 using UnityEngine;
 
 namespace Assets._Project._scripts.Boss
@@ -15,7 +14,7 @@ namespace Assets._Project._scripts.Boss
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                EventBus.Instance.Publish(new BossKilledEvent());
+                EventBus.Instance?.Publish(new BossKilledEvent());
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace Assets._Project._scripts._core.Events
 {
-    public struct BossKilledEvent
+    public struct HubLoadEvent
     {
     }
 }

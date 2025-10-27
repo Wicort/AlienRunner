@@ -1,7 +1,5 @@
 ﻿
 using Assets._Project._scripts._core.Events;
-using Assets._Project._scripts._core.Events.Structs;
-using System;
 using UnityEngine;
 
 namespace Assets._Project._scripts._core.StateMachine.States
@@ -29,7 +27,15 @@ namespace Assets._Project._scripts._core.StateMachine.States
 
         private void OnBossKilled(BossKilledEvent @event)
         {
-            _stateMachine.Enter<RunState>();
+            Debug.Log("Boss killed! Transition to Hub.");
+
+            _stateMachine.StateData.UIController.FadeOut(onComplete: () =>
+            {
+                //GameObject hubInstance = Instantiate(Resources.Load<GameObject>("Prefabs/Hub"));
+                //_playerComponent.transform.position = hubInstance.transform.Find("SpawnPoint").position;
+
+                _stateMachine.Enter<HubState>();
+            });
         }
     }
 }

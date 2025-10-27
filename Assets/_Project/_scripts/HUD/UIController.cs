@@ -1,24 +1,28 @@
 ﻿using Assets._Project._scripts._core;
 using Assets._Project._scripts._core.Events;
+using System;
 using UnityEngine;
 
 namespace Assets._Project._scripts.HUD
 {
-    public class UIController : MonoBehaviour  // Singleton<UIController>
+    public class UIController : MonoBehaviour
     {
         [SerializeField] private Canvas _menuUI;
         [SerializeField] private Canvas _healthUI;
         [SerializeField] private Canvas _inventoryUI;
+        [SerializeField] private Canvas _hubUI;
 
         public void Initialize(Canvas healthUI)
         {
             _healthUI = healthUI;
+            
         }
 
         public enum UIMode
         {
             MenuMode,
             GameplayMode,
+            HubMode,
         }
 
         public void SwitchTo(UIMode mode)
@@ -26,6 +30,7 @@ namespace Assets._Project._scripts.HUD
             _menuUI.gameObject.SetActive(false);
             _healthUI.gameObject.SetActive(false);
             _inventoryUI.gameObject.SetActive(false);
+            _hubUI?.gameObject.SetActive(false);
 
             switch (mode)
             {
@@ -36,13 +41,32 @@ namespace Assets._Project._scripts.HUD
                     _healthUI.gameObject.SetActive(true);
                     _inventoryUI.gameObject.SetActive(true);
                     break;
+                case UIMode.HubMode:
+                    _hubUI?.gameObject.SetActive(true);
+                    break;
             }
         }
 
         public void OnStartButtonClicked()
         {
-            Debug.Log("Start button clicked");
             EventBus.Instance?.Publish(new RunStartedEvent());
         }
+
+        public void FadeIn(Action onComplete = null)
+        {
+            //UIScreenFader.Instance.gameObject.SetActive(false);
+            UIScreenFader.Instance.FadeIn(onComplete);
+        }
+
+        public void FadeOut(Action onComplete = null)
+        {
+            Debug.Log("Screen fade out");
+            UIScreenFader.Instance.gameObject.SetActive(true);
+            UIScreenFader.Instance.FadeOut(onComplete);
+        }
+
+        public void ShowHub() => SwitchTo(UIMode.HubMode);
+        public void ShowMenu() => SwitchTo(UIMode.MenuMode);
+        public void ShowGameplay() => SwitchTo(UIMode.GameplayMode);
     }
 }

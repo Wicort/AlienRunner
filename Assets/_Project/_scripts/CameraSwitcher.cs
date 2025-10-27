@@ -8,11 +8,13 @@ namespace Assets._Project._scripts
     {
         [SerializeField] private CinemachineVirtualCamera _menuCamera;
         [SerializeField] private CinemachineVirtualCamera _gameplayCamera;
+        [SerializeField] private CinemachineVirtualCamera _hubHeroCamera;
 
         public enum CameraMode
         {
             MenuCamera,
             GameplayCamera,
+            HubHeroCamera,
         }
 
         private void Start()
@@ -24,11 +26,13 @@ namespace Assets._Project._scripts
         {
             _menuCamera.Priority = 0;
             _gameplayCamera.Priority = 0;
+            _hubHeroCamera.Priority = 0;
 
             switch (mode)
             {
                 case CameraMode.MenuCamera     : SetPriority(_menuCamera, 10);     break;
                 case CameraMode.GameplayCamera : SetPriority(_gameplayCamera, 10); break;
+                case CameraMode.HubHeroCamera  : SetPriority(_hubHeroCamera, 10);  break;
             }
         }
 
