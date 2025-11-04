@@ -7,6 +7,13 @@ namespace Assets._Project._scripts
         [SerializeField] private GameObject _hubObject;
         [SerializeField] private Transform _playerSpawnPoint;
 
+        public Transform PlayerSpawnPoint => _playerSpawnPoint;
+
+        private void Awake()
+        {
+            HideHub();
+        }
+
         public void ShowHub()
         {
             _hubObject.SetActive(true);
@@ -16,7 +23,5 @@ namespace Assets._Project._scripts
         {
             _hubObject.SetActive(false);
         }
-
-
     }
 }

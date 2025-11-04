@@ -1,3 +1,4 @@
+using Assets._Project._scripts._core.Events;
 using UnityEngine;
 
 public class SwipeManager : MonoBehaviour
@@ -70,6 +71,7 @@ public class SwipeManager : MonoBehaviour
         if (swipe[0] || swipe[1] || swipe[2] || swipe[3])
         {
             MoveEvent?.Invoke(swipe);
+            EventBus.Instance.Publish(new MoveEvent { swipes = swipe });
         }
         else
         {

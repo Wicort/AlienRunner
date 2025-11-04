@@ -16,14 +16,16 @@ namespace Assets._Project._scripts._core.StateMachine.States
         public void Enter()
         {
             Debug.Log("Enter RunState");
-            _stateMachine.StateData.Player.GetComponent<PlayerController>().enabled = true;
             _stateMachine.StateData.UIController.SwitchTo(HUD.UIController.UIMode.MenuMode);
+
+            _stateMachine.StateData.Player.GetComponent<PlayerController>().EnableControl();
             _stateMachine.StateData.StartGamePosition = _stateMachine.StateData.Player.transform.position;
             _stateMachine.StateData.StartGameRotation = _stateMachine.StateData.Player.transform.rotation;
 
             EventBus.Instance.Subscribe<RunStartedEvent>(OnRunStarted);
             EventBus.Instance.Subscribe<PlayerDeathEvent>(OnPlayerDeath);
             EventBus.Instance.Subscribe<BossStartEvent>(OnBossStarted);
+            
         }
 
         public void Exit()
@@ -33,6 +35,7 @@ namespace Assets._Project._scripts._core.StateMachine.States
             EventBus.Instance.Unsubscribe<RunStartedEvent>(OnRunStarted);
             EventBus.Instance.Unsubscribe<PlayerDeathEvent>(OnPlayerDeath);
             EventBus.Instance.Unsubscribe<BossStartEvent>(OnBossStarted);
+            
         }
 
         private void OnRunStarted(RunStartedEvent @event)
@@ -40,14 +43,11 @@ namespace Assets._Project._scripts._core.StateMachine.States
             _stateMachine.StateData.UIController.SwitchTo(HUD.UIController.UIMode.GameplayMode);
             CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.GameplayCamera);
             RoadGenerator.Instance.StartLevel();
-            // _stateMachine.Enter<DeathState>();
         }
 
         private void OnPlayerDeath(PlayerDeathEvent @event)
         {
             _stateMachine.Enter<DeathState>();
-            //_stateMachine.StateData.UIController.SwitchTo(HUD.UIController.UIMode.GameplayMode);
-            //CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.GameplayCamera);
         }
 
         private void OnBossStarted(BossStartEvent @event)

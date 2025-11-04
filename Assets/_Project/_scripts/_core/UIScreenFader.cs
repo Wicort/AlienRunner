@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,8 +30,9 @@ namespace Assets._Project._scripts._core
             StartCoroutine(Fade(fadePanelColor, clearColor, onComplete, true));
         }
 
-        private System.Collections.IEnumerator Fade(Color from, Color to, Action onComplete, bool deactivate = false)
+        private IEnumerator Fade(Color from, Color to, Action onComplete, bool deactivate = false)
         {
+            Debug.Log("Fade");
             float t = 0f;
             while (t < 1f)
             {

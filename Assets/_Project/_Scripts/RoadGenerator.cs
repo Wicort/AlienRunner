@@ -68,12 +68,12 @@ public class RoadGenerator : Singleton<RoadGenerator>
         yield return new WaitForSeconds(.7f);
 
         StartMoving();
-        SwipeManager.Instance.enabled = true;
+        //SwipeManager.Instance.enabled = true;
     }
 
     public void ResetLevel()
     {
-        SwipeManager.Instance.enabled = false;
+        //SwipeManager.Instance.enabled = false;
         _currentSegment = 0;
         StopMoving();
 

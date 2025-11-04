@@ -42,16 +42,29 @@ public class PlayerController : MonoBehaviour
         
         ShootingCoroutine = StartCoroutine(GunShooting());
 
-        SwipeManager.Instance.MoveEvent += MovePlayer;
+        EnableControl();
         EventBus.Instance.Subscribe<RunStartedEvent>(StartGame);
         EventBus.Instance.Subscribe<BossStartEvent>(OnBossStarted);
     }
 
     private void OnDestroy()
     {
-        SwipeManager.Instance.MoveEvent -= MovePlayer;
+        EventBus.Instance.Unsubscribe<MoveEvent>(MovePlayer);
         EventBus.Instance.Unsubscribe<RunStartedEvent>(StartGame);
         EventBus.Instance.Unsubscribe<BossStartEvent>(OnBossStarted);
+    }
+
+    public void DisableControl()
+    {
+        enabled = false;
+        //SwipeManager.Instance.MoveEvent -= MovePlayer;
+        EventBus.Instance.Unsubscribe<MoveEvent>(MovePlayer);
+    }
+    public void EnableControl()
+    {
+        enabled = true;
+        //SwipeManager.Instance.MoveEvent += MovePlayer;
+        EventBus.Instance.Subscribe<MoveEvent>(MovePlayer);
     }
 
     private void OnBossStarted(BossStartEvent @event)
@@ -68,8 +81,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void MovePlayer(bool[] swipes)
+    private void MovePlayer(MoveEvent @event)
     {
+        Debug.Log("MovePlayer");
+
+        bool[] swipes = @event.swipes;
+
         if (swipes[(int)SwipeManager.Direction.Left] && _pointFinish > -_laneOffset)
         {
             MoveHorizontal(-_laneChangeSpeed);

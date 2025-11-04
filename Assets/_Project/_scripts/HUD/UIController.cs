@@ -15,7 +15,6 @@ namespace Assets._Project._scripts.HUD
         public void Initialize(Canvas healthUI)
         {
             _healthUI = healthUI;
-            
         }
 
         public enum UIMode
@@ -52,10 +51,16 @@ namespace Assets._Project._scripts.HUD
             EventBus.Instance?.Publish(new RunStartedEvent());
         }
 
+        public void OnGoToLevelButtonClick()
+        {
+            EventBus.Instance?.Publish(new GoToLevelEvent { Level = 1 });
+        }
+
         public void FadeIn(Action onComplete = null)
         {
-            //UIScreenFader.Instance.gameObject.SetActive(false);
+            Debug.Log("Screen fade in");
             UIScreenFader.Instance.FadeIn(onComplete);
+            UIScreenFader.Instance.gameObject.SetActive(false);
         }
 
         public void FadeOut(Action onComplete = null)

@@ -31,9 +31,7 @@ namespace Assets._Project._scripts._core.StateMachine.States
 
             _stateMachine.StateData.UIController.FadeOut(onComplete: () =>
             {
-                //GameObject hubInstance = Instantiate(Resources.Load<GameObject>("Prefabs/Hub"));
-                //_playerComponent.transform.position = hubInstance.transform.Find("SpawnPoint").position;
-
+                Debug.Log("On fade complete");
                 _stateMachine.Enter<HubState>();
             });
         }
