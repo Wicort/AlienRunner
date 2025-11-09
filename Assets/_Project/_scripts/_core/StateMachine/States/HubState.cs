@@ -39,11 +39,13 @@ namespace Assets._Project._scripts._core.StateMachine.States
         public void Exit()
         {
             EventBus.Instance.Unsubscribe<GoToLevelEvent>(OnLevelStarted);
+            _data.Hub.HideHub();
         }
 
         private void OnLevelStarted(GoToLevelEvent @event)
         {
             Debug.Log(@event.Level);
+            _stateMachine.Enter<RunState>();
         }
     }
 }

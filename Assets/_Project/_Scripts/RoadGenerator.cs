@@ -17,11 +17,15 @@ public class RoadGenerator : Singleton<RoadGenerator>
     private List<LevelSegment> roads = new();
     private float speed;
 
-    void Start()
+    public void Initialize()
     {
-        
         _level.Initialize();
         ResetLevel();
+    }
+
+    void Start()
+    {
+        Initialize();
     }
 
     void Update()
@@ -63,17 +67,20 @@ public class RoadGenerator : Singleton<RoadGenerator>
         gameObject.SetActive(false);
     }
 
+    public void EnableLevel()
+    {
+        gameObject.SetActive(true);
+    }
+
     private IEnumerator Run()
     {
         yield return new WaitForSeconds(.7f);
 
         StartMoving();
-        //SwipeManager.Instance.enabled = true;
     }
 
     public void ResetLevel()
     {
-        //SwipeManager.Instance.enabled = false;
         _currentSegment = 0;
         StopMoving();
 
@@ -96,7 +103,7 @@ public class RoadGenerator : Singleton<RoadGenerator>
         LevelSegment nextSegment = _level.GetSegment(_currentSegment, endless);
         if (nextSegment == null)
         {
-            Debug.Log("Уровень закончен");
+            Debug.Log("Level is ended");
             return;
         }
 

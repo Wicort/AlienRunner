@@ -1,3 +1,4 @@
+using Assets._Project._scripts;
 using Assets._Project._scripts._core.Events;
 using Assets._Project._scripts.Weapon;
 using System;
@@ -35,16 +36,23 @@ public class PlayerController : MonoBehaviour
     private int JumpHash = Animator.StringToHash("Jump");
     private int SlideHash = Animator.StringToHash("Slide");
 
-
-    private void Start()
+    public void Initialize()
     {
         _rb = GetComponent<Rigidbody>();
-        
+
         ShootingCoroutine = StartCoroutine(GunShooting());
 
         EnableControl();
+        ResetGame();
+
+
         EventBus.Instance.Subscribe<RunStartedEvent>(StartGame);
         EventBus.Instance.Subscribe<BossStartEvent>(OnBossStarted);
+    }
+
+    private void Start()
+    {
+        Initialize();
     }
 
     private void OnDestroy()
@@ -57,13 +65,11 @@ public class PlayerController : MonoBehaviour
     public void DisableControl()
     {
         enabled = false;
-        //SwipeManager.Instance.MoveEvent -= MovePlayer;
         EventBus.Instance.Unsubscribe<MoveEvent>(MovePlayer);
     }
     public void EnableControl()
     {
         enabled = true;
-        //SwipeManager.Instance.MoveEvent += MovePlayer;
         EventBus.Instance.Subscribe<MoveEvent>(MovePlayer);
     }
 
@@ -190,6 +196,10 @@ public class PlayerController : MonoBehaviour
 
     public void ResetGame()
     {
+        transform.position = new Vector3(0, 0, -3);
+        transform.rotation = Quaternion.identity;
+        
+
         _rb.linearVelocity = Vector3.zero;
         _pointStart = 0;
         _pointFinish = 0;

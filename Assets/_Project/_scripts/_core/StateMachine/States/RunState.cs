@@ -8,6 +8,8 @@ namespace Assets._Project._scripts._core.StateMachine.States
     {
         private GameStateMachine _stateMachine;
 
+        private StateMachineData _data => _stateMachine.StateData;
+
         public RunState(GameStateMachine stateMachine) 
         { 
             _stateMachine = stateMachine;
@@ -16,21 +18,27 @@ namespace Assets._Project._scripts._core.StateMachine.States
         public void Enter()
         {
             Debug.Log("Enter RunState");
-            _stateMachine.StateData.UIController.SwitchTo(HUD.UIController.UIMode.MenuMode);
 
-            _stateMachine.StateData.Player.GetComponent<PlayerController>().EnableControl();
-            _stateMachine.StateData.StartGamePosition = _stateMachine.StateData.Player.transform.position;
-            _stateMachine.StateData.StartGameRotation = _stateMachine.StateData.Player.transform.rotation;
+            if (RoadGenerator.Instance != null)
+            {
+                RoadGenerator.Instance.gameObject.SetActive(true);
+                RoadGenerator.Instance.Initialize();
+            }
+
+            _data.Player.GetComponent<PlayerController>().Initialize();
+            _data.UIController.SwitchTo(HUD.UIController.UIMode.MenuMode);
+            
+            if (CameraSwitcher.Instance != null) 
+                CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.MenuCamera);
 
             EventBus.Instance.Subscribe<RunStartedEvent>(OnRunStarted);
             EventBus.Instance.Subscribe<PlayerDeathEvent>(OnPlayerDeath);
             EventBus.Instance.Subscribe<BossStartEvent>(OnBossStarted);
-            
         }
 
         public void Exit()
         {
-            _stateMachine.StateData.Player.GetComponent<PlayerController>().enabled = false;
+            _data.Player.GetComponent<PlayerController>().enabled = false;
 
             EventBus.Instance.Unsubscribe<RunStartedEvent>(OnRunStarted);
             EventBus.Instance.Unsubscribe<PlayerDeathEvent>(OnPlayerDeath);
@@ -40,7 +48,7 @@ namespace Assets._Project._scripts._core.StateMachine.States
 
         private void OnRunStarted(RunStartedEvent @event)
         {
-            _stateMachine.StateData.UIController.SwitchTo(HUD.UIController.UIMode.GameplayMode);
+            _data.UIController.SwitchTo(HUD.UIController.UIMode.GameplayMode);
             CameraSwitcher.Instance.SwitchTo(CameraSwitcher.CameraMode.GameplayCamera);
             RoadGenerator.Instance.StartLevel();
         }

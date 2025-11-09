@@ -7,6 +7,9 @@ namespace Assets._Project._scripts._core.StateMachine.States
     public class BootStrapState : IState
     {
         private GameStateMachine _stateMachine;
+
+        private StateMachineData _data => _stateMachine.StateData;
+
         public BootStrapState(GameStateMachine gameStateMachine, PlayerComponent playerComponent, HubController hubController, UIController uiController)
         {
             _stateMachine = gameStateMachine;
@@ -21,7 +24,8 @@ namespace Assets._Project._scripts._core.StateMachine.States
         public void Enter()
         {
             Debug.Log("Enter BootStrapState");
-            _stateMachine.StateData.Player.GetComponent<PlayerController>().enabled = false;
+
+            _data.Player.GetComponent<PlayerController>().enabled = false;
             _stateMachine.Enter<RunState>();
         }
 
