@@ -10,7 +10,10 @@ namespace Assets._Project._scripts._core.StateMachine.States
 
         private StateMachineData _data => _stateMachine.StateData;
 
-        public BootStrapState(GameStateMachine gameStateMachine, PlayerComponent playerComponent, HubController hubController, UIController uiController)
+        public BootStrapState(GameStateMachine gameStateMachine, 
+            PlayerComponent playerComponent, 
+            HubController hubController, 
+            UIController uiController)
         {
             _stateMachine = gameStateMachine;
             _stateMachine.SetStateMachineData(

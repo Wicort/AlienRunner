@@ -2381,6 +2381,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 712022988}
     m_Modifications:
+    - target: {fileID: 1869860410834581548, guid: 7bc763164c2cb9043a5848c331453edb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069831681034616706, guid: 7bc763164c2cb9043a5848c331453edb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750665506411026608, guid: 7bc763164c2cb9043a5848c331453edb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8081533075217521496, guid: 7bc763164c2cb9043a5848c331453edb, type: 3}
       propertyPath: m_Name
       value: Hub
