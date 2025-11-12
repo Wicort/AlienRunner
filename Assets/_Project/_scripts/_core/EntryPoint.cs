@@ -16,7 +16,7 @@ namespace Assets._Project._scripts._core
         private void Awake()
         {
             GameObject player = SpawnPlayer();
-            _uiController.Initialize(player.GetComponent<PlayerComponent>().HealthUI);
+            
             GameStateMachine stateMachine = 
                 new GameStateMachine(
                     player.GetComponent<PlayerComponent>(), 
@@ -26,7 +26,10 @@ namespace Assets._Project._scripts._core
 
         private GameObject SpawnPlayer()
         {
-            return Instantiate(_playerPrefab, _playerSpawnPoint.transform);
+            GameObject player = Instantiate(_playerPrefab, _playerSpawnPoint.transform);
+            _uiController.Initialize(player.GetComponent<PlayerComponent>().HealthUI);
+
+            return player;
         }
     }
 }
