@@ -118,16 +118,18 @@ public class PlayerController : MonoBehaviour
     {
         _isSliding = true;
         _animator.SetTrigger(SlideHash);
-        _collider.height = 1;
-        _collider.center = new Vector3(0, 0.5f,0);
+        _collider.height = 0.2f;
+        _collider.radius = 0.2f;
+        _collider.center = new Vector3(0, 0.1f,0);
         StartCoroutine(StopSlidingCoroutine());
     }
 
     private IEnumerator StopSlidingCoroutine()
     {
-        yield return new WaitForSeconds(.7f);
+        yield return new WaitForSeconds(.9f);
         _isSliding = false;
         _collider.height = 2;
+        _collider.radius = 0.5f;
         _collider.center = new Vector3(0, 1f, 0);
     }
 

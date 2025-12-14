@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8450388616656542919}
   - component: {fileID: 3988520321657208}
   m_Layer: 0
-  m_Name: obstacle
+  m_Name: Pallets
   m_TagString: Lose
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
