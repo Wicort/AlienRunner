@@ -12,6 +12,7 @@ namespace Assets._Project._scripts.Obstacles
         LEFTMIDDLE = 3,
         RIGHTMIDDLE = 4,
         LEFTRIGHT = 5,
+        ALL = 6,
     }
 
     public class RandomPrefabPlacer : MonoBehaviour
@@ -19,15 +20,19 @@ namespace Assets._Project._scripts.Obstacles
         [SerializeField] private GameObject _obstaclePrefab;
         private static float _offset = 2f;
         private static float _roadPosition = -5.5f;
+        private static Vector3 _leftPosition = new Vector3(-1 * _offset, 0, _roadPosition);
+        private static Vector3 _rightPosition = new Vector3(_offset, 0, _roadPosition);
+        private static Vector3 _middlePosition = new Vector3(0, 0, _roadPosition);
 
         private static readonly Dictionary<PlaceType, Vector3[]> _placementPoints = new()
         {
-            { PlaceType.LEFT,        new[] { new Vector3(-1 * _offset, 0, _roadPosition) } },
-            { PlaceType.MIDDLE,      new[] { new Vector3(0, 0, _roadPosition) } },
-            { PlaceType.RIGHT,       new[] { new Vector3(_offset, 0, _roadPosition) } },
-            { PlaceType.LEFTMIDDLE,  new[] { new Vector3(-1 * _offset, 0, _roadPosition), new Vector3(0, 0, _roadPosition) } },
-            { PlaceType.RIGHTMIDDLE, new[] { new Vector3(0, 0, _roadPosition), new Vector3(_offset, 0, _roadPosition) } },
-            { PlaceType.LEFTRIGHT,   new[] { new Vector3(-1 * _offset, 0, _roadPosition), new Vector3(_offset, 0, _roadPosition) } },
+            { PlaceType.LEFT,        new[] { _leftPosition } },
+            { PlaceType.MIDDLE,      new[] { _middlePosition } },
+            { PlaceType.RIGHT,       new[] { _rightPosition } },
+            { PlaceType.LEFTMIDDLE,  new[] { _leftPosition, _middlePosition } },
+            { PlaceType.RIGHTMIDDLE, new[] { _rightPosition, _middlePosition } },
+            { PlaceType.LEFTRIGHT,   new[] { _leftPosition, _rightPosition } },
+            { PlaceType.ALL,         new[] { _leftPosition, _middlePosition, _rightPosition } },
         };
 
         private void Start()

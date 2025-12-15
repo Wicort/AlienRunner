@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c636f312ec46a3043b67f08aa1bc870a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Project._scripts.Obstacles.RandomPrefabPlacer
-  _obstaclePrefab: {fileID: 3145630493591979215, guid: de3f30efe310ddb43b1769d2a88c2dbe, type: 3}
+  _obstaclePrefab: {fileID: 6845232372572396380, guid: d1355a948febb9741ae83986ad397544, type: 3}
 --- !u!1 &9172706049247749850
 GameObject:
   m_ObjectHideFlags: 0
