@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets._Project._scripts.Obstacles
 {
@@ -17,7 +18,7 @@ namespace Assets._Project._scripts.Obstacles
 
     public class RandomPrefabPlacer : MonoBehaviour
     {
-        [SerializeField] private GameObject _obstaclePrefab;
+        [SerializeField] private GameObject[] _obstacles;
         private static float _offset = 2f;
         private static float _roadPosition = -5.5f;
         private static Vector3 _leftPosition = new Vector3(-1 * _offset, 0, _roadPosition);
@@ -43,7 +44,7 @@ namespace Assets._Project._scripts.Obstacles
 
         private PlaceType GetRandomPlaceType()
         {
-            int ind = UnityEngine.Random.Range(0, Enum.GetValues(typeof(PlaceType)).Length);
+            int ind = Random.Range(0, Enum.GetValues(typeof(PlaceType)).Length);
 
             return (PlaceType)ind;
         }
@@ -59,9 +60,14 @@ namespace Assets._Project._scripts.Obstacles
             foreach (Vector3 point in points)
             {
 
-                GameObject obstacle = Instantiate(_obstaclePrefab, transform.position + point, Quaternion.identity);
+                GameObject obstacle = Instantiate(GetRandomObstacle(), transform.position + point, Quaternion.identity);
                 obstacle.transform.parent = transform;
             }
+        }
+
+        private GameObject GetRandomObstacle()
+        {
+            return _obstacles[Random.Range(0, _obstacles.Length)];
         }
     }
 }
