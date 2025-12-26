@@ -89,6 +89,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &449864650028545410
 MeshCollider:
@@ -330,6 +331,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &6525227771332358837
 MeshCollider:
@@ -459,8 +461,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Project._scripts.Obstacles.RandomPrefabPlacer
   _obstacles:
-  - {fileID: 6845232372572396380, guid: d1355a948febb9741ae83986ad397544, type: 3}
-  - {fileID: 8965073200397375335, guid: 2e7ac2949dbbdb94d8a2d09cd2c90ceb, type: 3}
+  - {fileID: 7246641714689769582, guid: c0ecb00b5e397c0459f377b7e0161c3b, type: 3}
+  - {fileID: 6868869629155771949, guid: f12d32b57fd8fe64da8a352c5a4ab48d, type: 3}
   - {fileID: 3145630493591979215, guid: de3f30efe310ddb43b1769d2a88c2dbe, type: 3}
 --- !u!1 &9172706049247749850
 GameObject:
@@ -551,6 +553,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &9199028106385342162
 MeshCollider:
